@@ -1,0 +1,64 @@
+/* 整體布局使用 Flex */
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  /* 登入區塊 */
+  .login-box {
+    padding: 16px;
+    font-size: 14px;
+    background-color: var(--bgColor-muted, var(--color-canvas-subtle));
+    border: 1px solid var(--borderColor-muted, var(--color-border-muted));
+    border-top: 0;
+    border-radius: 0 0 6px 6px;
+  }
+  .shadowbox {
+    width: 20em;
+    height: 22em;
+    border: 1px solid #333;
+    padding: 12px 12px 12px 12px;
+    background-color:#c4c3c3;
+    border-radius: 20px;
+  }
+  .shadowbox-1 {
+    width: 20em;
+    height: 14em;
+    border: 1px solid #333;
+    padding: 12px 12px 12px 12px;
+    background-color:#c4c3c3;
+    border-radius: 20px;
+  }
+  /* 標題 */
+  h1 {
+    text-align: center; 
+    font-size: 2em;
+  }
+  
+  /* 表單區域 */
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* 輸入框樣式 */
+  .input {
+    width: 100%;
+    display: flex;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+  }
+  
+  /* 按鈕區域 */
+  .button {
+    width: 100%;
+    padding: 10px;
+    background: #02992f;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+  }

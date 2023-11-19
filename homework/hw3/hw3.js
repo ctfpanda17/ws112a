@@ -13,37 +13,60 @@ const peoples = new Map()
   const router = new Router();
   router
     .get('/',(ctx) => {
-        ctx.response.body = "Home";
+        ctx.response.redirect("http://127.0.0.1:8001/public/index.html");
         }) 
         
     .get('/people',(ctx) => {
         ctx.response.body = Array.from(peoples.values());
     })
 
-    .get('/people/add',(ctx) => {
-        let params = ctx.request.url.searchParams
-        let name = params.get("name")
-        let tel = params.get("tel")
+    .post('/people/add',async(ctx) => {
+        const body = ctx.request.body()
+        if (body.type === "form") {
+          const pairs = await body.value
+          console.log('pairs=', pairs)
+          const params = {}
+          for (const [key, value] of pairs) {
+            params[key] = value
+          }
+          console.log('params=', params)
+        let name = params["name"]
+        let tel = params["tel"]
         console.log(`name=${name} tel=${tel}`)
 
         if(peoples.get(name)){
+            ctx.response.type = 'text/html'
             ctx.response.body = {'error':`name=${name} already exists!`}
         }
         else{
                 peoples.set(name, {name,tel})
                 ctx.response.type = 'text/html'
-                ctx.response.body = `<p>New (${name}, ${tel}) success </p><p><a href="/people/">List all connections</a></p>`
+                ctx.response.body = `<p>New (${name}, ${tel}) success </p><p><a href="/">回到標題</a></p>`
             }
-        })
-    .get('/people/find', (ctx) =>{
-        let params =ctx.request.url.searchParams
-        let name = params.get('name')
+        }
+    })
+    .post('/people/find', async(ctx) =>{
+        const body = ctx.request.body()
+        if (body.type === "form") {
+          const pairs = await body.value
+          console.log('pairs=', pairs)
+          const params = {}
+          for (const [key, value] of pairs) {
+            params[key] = value
+          }
+          console.log('params=', params)
+        let name = params["name"]
+        let tel = params['tel']
         console.log('name=', name)
-        if(peoples.has(name)){
-            ctx.response.body = peoples.get(name);
+        if(peoples.get(name)){
+            let tel = peoples.get(name).tel
+            ctx.response.type = 'text/html'
+            ctx.response.body = `${tel}`
         }
         else{
-            ctx.response.body =`${name} not find`
+            ctx.response.type = 'text/html'
+            ctx.response.body =`<p>${name} not find</p>`
+        }
         }
     })
     .get("/public/(.*)", async (ctx) => {
